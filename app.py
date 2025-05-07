@@ -1,11 +1,8 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import openai
-from pyngrok import conf
 #openai API
 openai.api_key = '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'
-#ngrok token
-conf.get_default().auth_token = "2wMwvJ4Lm4PRt593cv9uGDFJ6DM_4gjTKXqLM3i9rDvUEJnec"
 
 app = Flask(__name__)
 conversaciones = {}

@@ -1,10 +1,12 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-import openai
+from openai import OpenAI
 
-#openai API
-openai.api_key = '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'
-openai.api_base = 'https://openrouter.ai/api/v1'
+# OpenRouter API (usa tu propia clave desde https://openrouter.ai/)
+client = OpenAI(
+    api_key="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", #API openrouter
+    base_url="https://openrouter.ai/api/v1"  # Base URL de OpenRouter
+)
 
 app = Flask(__name__)
 conversaciones = {}
@@ -29,18 +31,18 @@ def whatsapp_reply():
 
 def obtener_respuesta_openai(historial):
     try:
-        respuesta = openai.ChatCompletion.create(
-            model="mistralai/mixtral-8x7b-instruct",  # o usa "openai/gpt-3.5-turbo" si está disponible
+        respuesta = client.chat.completions.create(
+            model="mistralai/mixtral-8x7b-instruct",  # ← Puedes cambiarlo por otro modelo de OpenRouter
             messages=historial
         )
-        return respuesta.choices[0].message['content'].strip()
+        return respuesta.choices[0].message.content.strip()
     except Exception as e:
         print(f"Error con OpenAI: {e}")
         return "Lo siento, hubo un problema procesando tu solicitud."
 
 @app.route('/')
 def index():
-    return "Bot de WhatsApp con Flask y OpenRouter"
+    return "Bot de WhatsApp con Flask y OpenAI (vía OpenRouter)"
 
 if __name__ == '__main__':
     app.run()

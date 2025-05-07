@@ -1,8 +1,9 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-import openai
+from openai import OpenAI
+
 #openai API
-openai.api_key = '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'
+client = OpenAI(api_key='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')
 
 app = Flask(__name__)
 conversaciones = {}
@@ -27,11 +28,11 @@ def whatsapp_reply():
 
 def obtener_respuesta_openai(historial):
     try:
-        respuesta = openai.ChatCompletion.create(
+        respuesta = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=historial
         )
-        return respuesta.choices[0].message['content'].strip()
+        return respuesta.choices[0].message.content.strip()
     except Exception as e:
         print(f"Error con OpenAI: {e}")
         return "Lo siento, hubo un problema procesando tu solicitud."

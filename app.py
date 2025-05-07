@@ -46,5 +46,3 @@ def index():
 
 if __name__ == '__main__':
     app.run()
-print(f"Mensaje recibido de {from_number}: {incoming_msg}")
-print(f"Respuesta generada: {respuesta_llm}")

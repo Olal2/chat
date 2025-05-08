@@ -35,7 +35,7 @@ def whatsapp_reply():
 def obtener_respuesta_openai(historial):
     try:
         respuesta = client.chat.completions.create(
-            model="meta-llama/llama-3-8b-instruct", #LLM modelo de OpenRouter
+            model="nousresearch/nous-hermes-2-mistral", #LLM modelo de OpenRouter
             messages=historial
         )
         return respuesta.choices[0].message.content.strip()
